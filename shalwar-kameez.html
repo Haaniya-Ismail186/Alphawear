@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shalwar Kameez | AlphaWear</title>
+    <link rel="stylesheet" href="kameez style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">ALPHAWEAR</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shalwar-kameez.html" class="active-link">Shalwar Kameez</a></li>
+            <li><a href="hoodies.html">Hoodies</a></li>
+            <li><a href="shirts.html">Shirts</a></li>
+            <li><a href="tshirts.html">T-Shirts</a></li>
+            <li><a href="pants.html">Pants</a></li>
+            <li><a href="cart.html" class="cart-link">Cart</a></li>
+        </ul>
+    </nav>
+
+    <header class="category-header">
+        <div class="header-content">
+            <h1>SHALWAR KAMEEZ</h1>
+            <p>Premium Ethnic Wear in Monochrome & Beige</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="product-grid" id="product-display-grid">
+            </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 ALPHAWEAR. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="kameez script.js"></script>
+    
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('product-display-grid');
+            const category = "Shalwar Kameez";
+            
+            // Loop to create 20 products
+            for (let i = 1; i <= 20; i++) {
+                const price = 3500 + (i * 100); // Varied price
+                
+                const productHTML = `
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://via.placeholder.com/400x550/f5f5dc/000000?text=${category}+${i}" alt="${category}">
+                        </div>
+                        <div class="product-details">
+                            <h3>Alpha ${category} ${i}</h3>
+                            <p>Rs. ${price.toLocaleString()}</p>
+                            <button class="btn-add" onclick="addToCart('Alpha ${category} ${i}', ${price})">
+                                Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += productHTML;
+            }
+        });
+    </script> -->
+
+</body>
+</html>

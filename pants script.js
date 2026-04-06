@@ -29,14 +29,13 @@ function generateProducts(category) {
     if(!grid) return;
     grid.innerHTML = ''; 
 
-    // --- Data for Pants & Trousers (10 Each) ---
     const bottomNames = [
         "Baggy Fit Jeans", "Baggy Fit Jeans", "Baggy Fit Jeans", "Cropped Straight Fit Chinos", 
         "Baggy Fit Cargo Pants", "Baggy Fit Pants", "Balloon Fit Jeans", "Slim Fit Jeans", 
-        "Slim Fit Jeans", "Baggy Jeans With Laser Print", // 10 Pants
+        "Slim Fit Jeans", "Baggy Jeans With Laser Print", 
         "Terry Wide Leg Trousers", "Textured Jogger Trousers", "Relaxed Fit Trousers", "Slogan Print Jogger Trousers", 
         "Slogan Print Trousers", "Baggy Fit Trousers", "Basic Jogger Trousers", "Cropped Straight Fit Trousers", 
-        "Straight Fit Trousers", "Straight Fit Trousers" // 10 Trousers
+        "Straight Fit Trousers", "Straight Fit Trousers" 
     ];
 
     const bottomImages = [
@@ -50,7 +49,6 @@ function generateProducts(category) {
         "https://outfitters.com.pk/cdn/shop/files/F0775109622LOWER.jpg?v=1769671433",
         "https://outfitters.com.pk/cdn/shop/files/F0571109622Lower_3_b7eeaa2a-ab35-4435-859b-2efb7b673bea.jpg?v=1755088432",
         "https://outfitters.com.pk/cdn/shop/files/F0639109903LOWER_1.jpg?v=1769686349",
-        // Trousers Start
         "https://outfitters.com.pk/cdn/shop/files/F0624108006LOWER.jpg?v=1773726429",
         "https://outfitters.com.pk/cdn/shop/files/F0672108116LOWER_1_..jpg?v=1769748021",
         "https://outfitters.com.pk/cdn/shop/files/F0743108002LOWER.jpg?v=1773725898",
@@ -66,7 +64,6 @@ function generateProducts(category) {
     const isBottomPage = category.toLowerCase().includes('pant') || category.toLowerCase().includes('trouser');
 
     for (let i = 0; i < 20; i++) {
-        // Pants ki price thori high rakhi hai (Jeans mehngi hoti hain)
         const price = isBottomPage ? (3200 + (i * 100)) : 3500;
         const name = isBottomPage ? bottomNames[i] : `Product ${i+1}`;
         const imgUrl = isBottomPage ? bottomImages[i] : `https://via.placeholder.com/400x550`;
@@ -87,7 +84,7 @@ function generateProducts(category) {
                         <div class="size-box" onclick="selectSize(this)">36</div>
                     </div>
 
-                    <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}', ${price})">
+                    <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}', ${price}, this)">
                         Add To Cart
                     </button>
                 </div>
@@ -103,15 +100,40 @@ function selectSize(element) {
     const allSizes = parent.querySelectorAll('.size-box');
     allSizes.forEach(box => box.classList.remove('active'));
     element.classList.add('active');
+    
+    // Reset error styling
+    parent.style.border = "none";
 }
 
-// --- 5. Cart Logic ---
-function addToCart(name, price) {
+// --- 5. Cart Logic (Updated with Size Validation) ---
+function addToCart(name, price, buttonElement) {
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    // Check if size is selected
+    if (!selectedSizeBox) {
+        alert("Please select a waist size first!");
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        sizeContainer.style.borderRadius = "4px";
+        return; 
+    }
+
+    const sizeValue = selectedSizeBox.innerText;
     let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
-    cart.push({ id: Date.now(), name: name, price: price });
+    
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price,
+        size: sizeValue,
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
     localStorage.setItem('alphaCart', JSON.stringify(cart));
     updateCartCount();
-    alert(`${name} added to cart!`);
+    alert(`${name} (Size: ${sizeValue}) added to cart!`);
 }
 
 function updateCartCount() {
@@ -121,4 +143,47 @@ function updateCartCount() {
     if (cartElement) {
         cartElement.innerText = count;
     }
+}
+
+
+
+
+
+// --- 5. Cart Logic (Updated with Login Check) ---
+function addToCart(name, price, buttonElement) {
+    // 1. Check if User is Logged In
+    const activeUser = localStorage.getItem('alphaUser');
+    if (!activeUser) {
+        alert("Please Login or Sign Up to add items to your cart!");
+        window.location.href = 'login.html'; 
+        return; 
+    }
+
+    // 2. Check if Size is Selected
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    if (!selectedSizeBox) {
+        alert("Please select a size first!");
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        return; 
+    }
+
+    // 3. Add to LocalStorage (Cart Data)
+    const sizeValue = selectedSizeBox.innerText;
+    let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
+    
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price,
+        size: sizeValue,
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
+    localStorage.setItem('alphaCart', JSON.stringify(cart));
+    updateCartCount();
+    alert(`${name} (Size: ${sizeValue}) added to cart!`);
 }

@@ -68,9 +68,9 @@ function generateProducts(category) {
         const name = isAccPage ? accNames[i] : `Item ${i+1}`;
         const imgUrl = isAccPage ? accImages[i] : `https://via.placeholder.com/400x550`;
 
-        // Accessories ke liye different sizes logic
         let sizeHTML = '';
         if (name.toLowerCase().includes('cap') || name.toLowerCase().includes('hat') || name.toLowerCase().includes('socks') || name.toLowerCase().includes('wallet') || name.toLowerCase().includes('bag')) {
+            // Free size ko pehle se 'active' rakha hai kyunki isme selection ki zaroorat nahi
             sizeHTML = `<div class="size-box active" style="width: auto; padding: 0 10px;">Free Size</div>`;
         } else if (name.toLowerCase().includes('belt')) {
             sizeHTML = `
@@ -93,7 +93,7 @@ function generateProducts(category) {
                     <div class="size-container">
                         ${sizeHTML}
                     </div>
-                    <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}', ${price})">
+                    <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}', ${price}, this)">
                         Add To Cart
                     </button>
                 </div>
@@ -109,15 +109,40 @@ function selectSize(element) {
     const allSizes = parent.querySelectorAll('.size-box');
     allSizes.forEach(box => box.classList.remove('active'));
     element.classList.add('active');
+    
+    // Border reset agar red tha
+    parent.style.border = "none";
 }
 
-// --- 5. Cart Logic ---
-function addToCart(name, price) {
+// --- 5. Cart Logic (Updated with Validation) ---
+function addToCart(name, price, buttonElement) {
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    // Validation Check
+    if (!selectedSizeBox) {
+        alert("Please select a size first!");
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        sizeContainer.style.borderRadius = "4px";
+        return; 
+    }
+
+    const sizeValue = selectedSizeBox.innerText;
     let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
-    cart.push({ id: Date.now(), name: name, price: price });
+    
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price,
+        size: sizeValue,
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
     localStorage.setItem('alphaCart', JSON.stringify(cart));
     updateCartCount();
-    alert(`${name} added to cart!`);
+    alert(`${name} (Size: ${sizeValue}) added to cart!`);
 }
 
 function updateCartCount() {
@@ -127,4 +152,54 @@ function updateCartCount() {
     if (cartElement) {
         cartElement.innerText = count;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// --- 5. Cart Logic (Updated with Login Check) ---
+function addToCart(name, price, buttonElement) {
+    // 1. Check if User is Logged In
+    const activeUser = localStorage.getItem('alphaUser');
+    if (!activeUser) {
+        alert("Please Login or Sign Up to add items to your cart!");
+        window.location.href = 'login.html'; 
+        return; 
+    }
+
+    // 2. Check if Size is Selected
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    if (!selectedSizeBox) {
+        alert("Please select a size first!");
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        return; 
+    }
+
+    // 3. Add to LocalStorage (Cart Data)
+    const sizeValue = selectedSizeBox.innerText;
+    let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
+    
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price,
+        size: sizeValue,
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
+    localStorage.setItem('alphaCart', JSON.stringify(cart));
+    updateCartCount();
+    alert(`${name} (Size: ${sizeValue}) added to cart!`);
 }

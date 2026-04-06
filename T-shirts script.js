@@ -29,7 +29,6 @@ function generateProducts(category) {
     if(!grid) return;
     grid.innerHTML = ''; 
 
-    // --- T-Shirts Data ---
     const tShirtNames = [
         "Crew Neck T-Shirt", "Textured Crew Neck T-Shirt", "Striped T-Shirt", "Basic Ottoman T-Shirt",
         "Graphic T-Shirt", "Slogan Print T-Shirt", "Slogan Print T-Shirt", "Slogan Print T-Shirt",
@@ -84,7 +83,7 @@ function generateProducts(category) {
                         <div class="size-box" onclick="selectSize(this)">XL</div>
                     </div>
 
-                    <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}', ${price})">
+                    <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}', ${price}, this)">
                         Add To Cart
                     </button>
                 </div>
@@ -100,15 +99,39 @@ function selectSize(element) {
     const allSizes = parent.querySelectorAll('.size-box');
     allSizes.forEach(box => box.classList.remove('active'));
     element.classList.add('active');
+    
+    // Border color reset karein agar red hua tha
+    parent.style.border = "none";
 }
 
-// --- 5. Cart Logic ---
-function addToCart(name, price) {
+// --- 5. Cart Logic (With Size Validation) ---
+function addToCart(name, price, buttonElement) {
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    // Agar size select nahi kiya to alert dikhao
+    if (!selectedSizeBox) {
+        alert("Please select a size before adding to cart!");
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        return; 
+    }
+
+    const sizeValue = selectedSizeBox.innerText;
     let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
-    cart.push({ id: Date.now(), name: name, price: price });
+    
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price,
+        size: sizeValue, // Selected size save ho raha hai
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
     localStorage.setItem('alphaCart', JSON.stringify(cart));
     updateCartCount();
-    alert(`${name} added to cart!`);
+    alert(`${name} (Size: ${sizeValue}) added to cart!`);
 }
 
 function updateCartCount() {
@@ -118,4 +141,52 @@ function updateCartCount() {
     if (cartElement) {
         cartElement.innerText = count;
     }
+}
+
+
+
+
+
+
+
+
+
+
+// --- 5. Cart Logic (Updated with Login Check) ---
+function addToCart(name, price, buttonElement) {
+    // 1. Check if User is Logged In
+    const activeUser = localStorage.getItem('alphaUser');
+    if (!activeUser) {
+        alert("Please Login or Sign Up to add items to your cart!");
+        window.location.href = 'login.html'; 
+        return; 
+    }
+
+    // 2. Check if Size is Selected
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    if (!selectedSizeBox) {
+        alert("Please select a size first!");
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        return; 
+    }
+
+    // 3. Add to LocalStorage (Cart Data)
+    const sizeValue = selectedSizeBox.innerText;
+    let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
+    
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price,
+        size: sizeValue,
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
+    localStorage.setItem('alphaCart', JSON.stringify(cart));
+    updateCartCount();
+    alert(`${name} (Size: ${sizeValue}) added to cart!`);
 }

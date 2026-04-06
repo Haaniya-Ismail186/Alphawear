@@ -1,0 +1,331 @@
+/* --- Diners Style Cart CSS --- */
+:root {
+    --black: #000000;
+    --dark-grey: #1a1a1a;
+    --white: #ffffff;
+    --border-color: #e0e0e0;
+    --text-grey: #666;
+    --light-bg: #f8f8f8;
+    --beige: #ffffff; 
+    --transition: all 0.3s ease-in-out;
+    /* --purple: #7d2ae8; */
+}
+
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+} */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* --- 1. Navigation --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 6%;
+    background: var(--black);
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+}
+
+.logo {
+    color: var(--beige);
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 25px;
+    transition: var(--transition);
+}
+
+.nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.nav-links a:hover {
+    color: var(--white);
+}
+
+/* --- 2. Cart Layout --- */
+.cart-wrapper {
+    padding: 40px 6%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.cart-breadcrumb {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.main-title {
+    font-size: clamp(22px, 5vw, 28px);
+    font-weight: 400;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.cart-content-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 40px;
+    align-items: start;
+}
+
+@media (min-width: 1024px) {
+    .cart-content-grid {
+        grid-template-columns: 2.5fr 1fr;
+    }
+}
+
+/* --- 3. Table Section --- */
+.cart-table-header {
+    display: none; 
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--black);
+    letter-spacing: 1px;
+}
+
+@media (min-width: 768px) {
+    .cart-table-header { display: flex; }
+}
+
+.col-prod { flex: 2; }
+.col-price, .col-qty, .col-total { flex: 1; text-align: center; }
+
+.cart-item-row {
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+}
+
+.prod-info-cell {
+    flex: 0 0 100%;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.prod-img {
+    width: 90px;
+    height: 110px;
+    object-fit: cover;
+    border: 1px solid #f0f0f0;
+}
+
+.prod-desc h4 { font-size: 14px; font-weight: 600; text-transform: uppercase; }
+.prod-desc p { font-size: 12px; color: #777; margin-top: 4px; }
+
+.price-cell, .qty-cell, .total-cell {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+@media (min-width: 768px) {
+    .prod-info-cell { flex: 2; margin-bottom: 0; }
+    .price-cell, .qty-cell, .total-cell { flex: 1; }
+}
+
+/* Quantity Selector */
+.qty-btn {
+    border: 1px solid #ccc;
+    background: #fff;
+    width: 30px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.qty-input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-right: none;
+    height: 35px;
+    font-weight: 600;
+}
+
+.remove-btn-x {
+    cursor: pointer;
+    color: #999;
+    font-size: 18px;
+    transition: 0.2s;
+    padding: 5px;
+}
+
+.remove-btn-x:hover { color: #000; }
+
+/* --- 4. Summary Column --- */
+.cart-summary-column {
+    background: var(--white);
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 100px;
+}
+
+.summary-title {
+    font-size: 16px;
+    font-weight: 700;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.sum-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.total-row {
+    font-weight: 700;
+    font-size: 18px;
+    padding-top: 15px;
+    margin-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.baadmay-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--light-bg);
+    padding: 12px;
+    margin: 20px 0;
+    font-size: 11px;
+}
+
+.baadmay-tag {
+    background: var(--purple);
+    color: #fff;
+    padding: 2px 6px;
+    font-weight: bold;
+}
+
+.btn-proceed, .btn-continue-shop {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.btn-proceed { background: var(--dark-grey); color: #fff; }
+.btn-continue-shop { background: #000; color: #fff; }
+
+/* --- 5. Mobile Menu Logic --- */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+
+    .nav-links {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background: var(--black);
+        width: 100%;
+        text-align: center;
+        padding: 40px 0;
+        height: 100vh;
+    }
+
+    .nav-links.is-active {
+        left: 0;
+    }
+
+    /* Burger Animation */
+    .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--white);
+    transition: var(--transition);
+}
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #25d366;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 3000;
+}
+
+.account-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #000000;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: 0.3s ease;
+    border: 1px solid #ddd;
+}

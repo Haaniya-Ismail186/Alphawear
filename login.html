@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Alpha Collection</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 150px auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            text-align: center;
+            font-family: sans-serif;
+        }
+        .login-container h2 { letter-spacing: 2px; margin-bottom: 20px; }
+        .login-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .switch-form { margin-top: 15px; font-size: 14px; }
+        .switch-form a { color: #000; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>LOGIN</h2>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email Address" required>
+            <input type="password" id="loginPass" placeholder="Password" required>
+            <button type="submit" class="btn-login">SIGN IN</button>
+        </form>
+        <div class="switch-form">
+            Don't have an account? <a href="signup.html">Create One</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            
+            // Dummy Login Logic: User ka data save kar rahe hain
+            const userData = { name: "Valued Customer", email: email };
+            localStorage.setItem('alphaUser', JSON.stringify(userData));
+            
+            alert("Login Successful!");
+            window.history.back(); // Jahan se aaya tha wahi wapas chala jaye
+        };
+    </script>
+</body>
+</html>

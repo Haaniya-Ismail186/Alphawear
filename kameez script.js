@@ -17,7 +17,7 @@ function initNavigation() {
     const navList = document.getElementById('nav-list');
     if (mobileMenu && navList) {
         mobileMenu.addEventListener('click', () => {
-            navList.classList.toggle('active');
+            navList.classList.toggle('is-active');
             mobileMenu.classList.toggle('is-active');
         });
     }
@@ -27,7 +27,7 @@ function initNavigation() {
 function generateProducts(category) {
     const grid = document.getElementById('product-display-grid');
     if (!grid) return;
-    grid.innerHTML = ''; // Clear existing content
+    grid.innerHTML = ''; 
 
     const productNames = [
         "BLUE CASUAL KAMEEZ SHALWAR", "RUST COTTON CASUAL KAMEEZ SHALWAR", "TEA PINK CASUAL KAMEEZ SHALWAR", "BROWN COTTON PLAIN KAMEEZ SHALWAR",
@@ -81,13 +81,13 @@ function generateProducts(category) {
                         <div class="size-box" onclick="selectSize(this)">XL</div>
                     </div>
 
-                    <button class="btn-add" onclick="addToCart('${name}', ${price})">
+                    <button class="btn-add" onclick="addToCart('${name}', ${price}, this)">
                         Add To Cart
                     </button>
                 </div>
             </div>
         `;
-        grid.innerHTML += productHTML; // This was missing - essential to show cards
+        grid.innerHTML += productHTML; 
     }
 }
 
@@ -96,22 +96,50 @@ function selectSize(element) {
     const parent = element.parentElement;
     const allSizes = parent.querySelectorAll('.size-box');
     
-    // Pehle sab se 'active' class hatao
     allSizes.forEach(box => box.classList.remove('active'));
-    
-    // Phir jis par click hua usse 'active' kar do
     element.classList.add('active');
+    
+    // Border color reset karein agar red hua tha
+    parent.style.border = "none";
 }
 
-// --- 5. Cart Logic ---
-function addToCart(name, price) {
+// --- 5. Cart Logic with Size Validation ---
+function addToCart(name, price, buttonElement) {
+    // Button ke zariye specific product card dhoondna
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    // Check agar size select nahi hua
+    if (!selectedSizeBox) {
+        alert("Please select a size first!");
+        
+        // Visual feedback: Size container ko highlight karna
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        sizeContainer.style.borderRadius = "4px";
+        return; // Function yahin ruk jayega
+    }
+
+    const sizeValue = selectedSizeBox.innerText;
     let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
-    cart.push({ id: Date.now(), name: name, price: price });
+    
+    // Cart object mein naya item add karna
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price, 
+        size: sizeValue,
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
     localStorage.setItem('alphaCart', JSON.stringify(cart));
     updateCartCount();
-    alert(`${name} added to cart!`);
+    
+    alert(`${name} (Size: ${sizeValue}) has been added to your cart.`);
 }
 
+// --- 6. Update Navbar Cart Count ---
 function updateCartCount() {
     const cartData = localStorage.getItem('alphaCart');
     const count = cartData ? JSON.parse(cartData).length : 0;
@@ -119,4 +147,50 @@ function updateCartCount() {
     if (cartElement) {
         cartElement.innerText = count;
     }
+}
+
+
+
+
+
+
+
+
+// --- 5. Cart Logic (Updated with Login Check) ---
+function addToCart(name, price, buttonElement) {
+    // 1. Check if User is Logged In
+    const activeUser = localStorage.getItem('alphaUser');
+    if (!activeUser) {
+        alert("Please Login or Sign Up to add items to your cart!");
+        window.location.href = 'login.html'; 
+        return; 
+    }
+
+    // 2. Check if Size is Selected
+    const productCard = buttonElement.closest('.product-card');
+    const selectedSizeBox = productCard.querySelector('.size-box.active');
+
+    if (!selectedSizeBox) {
+        alert("Please select a size first!");
+        const sizeContainer = productCard.querySelector('.size-container');
+        sizeContainer.style.border = "1px solid red";
+        return; 
+    }
+
+    // 3. Add to LocalStorage (Cart Data)
+    const sizeValue = selectedSizeBox.innerText;
+    let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
+    
+    cart.push({ 
+        id: Date.now(), 
+        name: name, 
+        price: price,
+        size: sizeValue,
+        img: productCard.querySelector('img').src,
+        quantity: 1 
+    });
+
+    localStorage.setItem('alphaCart', JSON.stringify(cart));
+    updateCartCount();
+    alert(`${name} (Size: ${sizeValue}) added to cart!`);
 }

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - ALPHAWEAR</title>
+    <link rel="stylesheet" href="cart style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">ALPHAWEAR</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shalwar-kameez.html">Shalwar Kameez</a></li>
+            <li><a href="hoodies.html">Hoodies</a></li>
+            <li><a href="shirts.html">Shirts</a></li>
+            <li><a href="tshirts.html">T-Shirts</a></li>
+            <li><a href="pants.html">Pants & Trousers</a></li>
+            <li><a href="accessories.html">Accessories</a></li>
+            <li><a href="cart.html" class="cart-link">Cart</a></li>
+            <li><a href="account.html" class="account-btn">Account</a></li>
+        </ul>
+    </nav>
+
+    <div class="cart-wrapper">
+        <div class="cart-breadcrumb">Home > Your Cart</div>
+        <h1 class="main-title">YOUR CART</h1>
+
+        <div class="cart-content-grid">
+            <div class="cart-items-column">
+                <div class="cart-table-header">
+                    <span class="col-prod">PRODUCT</span>
+                    <span class="col-price">PRICE</span>
+                    <span class="col-qty">QUANTITY</span>
+                    <span class="col-total">TOTAL</span>
+                </div>
+                
+                <div id="cart-items-container">
+                    </div>
+
+                <div class="secure-tag">
+                    <i class="fas fa-shield-alt"></i> Secure Shopping Guarantee
+                </div>
+            </div>
+
+            <div class="cart-summary-column">
+                <h2 class="summary-title">ORDER SUMMARY</h2>
+                <div class="summary-details">
+                    <div class="sum-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal-price">Rs 0</span>
+                    </div>
+                    
+                    <div class="sum-row total-row">
+                        <span>TOTAL:</span>
+                        <span id="final-total">Rs 0</span>
+                    </div>
+                    
+                    <!-- <div class="baadmay-banner">
+                        <span class="baadmay-tag">baadmay</span>
+                        <p>Pay in 3 Installments of <strong id="installment-amt">Rs 0</strong></p>
+                    </div> -->
+
+                   
+                    <!-- <button class="btn-proceed" onclick="window.location.href='checkout.html'">PROCEED TO CHECKOUT</button> -->
+                     
+                     <button class="btn-proceed" onclick="proceedToCheckout()">
+    PROCEED TO CHECKOUT
+</button>
+                    <button class="btn-continue-shop" onclick="window.location.href='index.html'">CONTINUE SHOPPING</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cart script.js"></script>
+</body>
+</html>

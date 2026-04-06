@@ -1,0 +1,145 @@
+/* --- ALPHAWEAR Checkout Page CSS --- */
+:root {
+    --black: #000000;
+    --white: #ffffff;
+    --border-color: #e0e0e0;
+    --light-bg: #f9f9f9;
+    --purple: #7d2ae8;
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--white);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+
+.checkout-container {
+    padding: 40px 6%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* Grid Layout */
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 50px;
+    margin-top: 30px;
+}
+
+/* Form Styles */
+.checkout-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--black);
+    padding-bottom: 10px;
+}
+
+.shipping-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    color: #444;
+}
+
+.form-group input {
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    font-size: 14px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.form-group input:focus {
+    border-color: var(--black);
+}
+
+/* Payment Box */
+.payment-method-box {
+    border: 1px solid var(--black);
+    padding: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    background: var(--light-bg);
+}
+
+/* Right Side Order Summary */
+.order-summary-box {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    position: sticky;
+    top: 100px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.btn-place-order {
+    width: 100%;
+    background: var(--black);
+    color: var(--white);
+    padding: 18px;
+    border: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 25px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-place-order:hover {
+    background: #333;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

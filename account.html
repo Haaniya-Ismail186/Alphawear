@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Alpha Collection</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="account-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- <nav class="navbar">
+        <div class="nav-container">
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="logo">ALPHA</div>
+            <ul class="nav-links" id="nav-list">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="shirts.html">SHIRTS</a></li>
+                <li><a href="t-shirts.html">T-SHIRTS</a></li>
+                <li><a href="pants.html">PANTS</a></li>
+                <li><a href="accessories.html">ACCESSORIES</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="account.html"><i class="fa-regular fa-user"></i></a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav> -->
+
+
+    <nav class="navbar">
+        <div class="logo">ALPHAWEAR</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shalwar-kameez.html">Shalwar Kameez</a></li>
+            <li><a href="hoodies.html">Hoodies</a></li>
+            <li><a href="shirts.html">Shirts</a></li>
+            <li><a href="tshirts.html">T-Shirts</a></li>
+            <li><a href="pants.html">Pants & Trousers</a></li>
+            <li><a href="accessories.html">Accessories</a></li>
+            <li><a href="cart.html" class="cart-link">Cart</a></li>
+            <li><a href="account.html" class="account-btn"> Account</a></li>
+        </ul>
+    </nav>
+
+    <div class="account-container">
+        <div class="account-header">
+            <h1>MY ACCOUNT</h1>
+        </div>
+
+        <div class="account-grid">
+            <div class="profile-card">
+                <div class="profile-info">
+                    <div class="user-avatar">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h3 id="user-name">Guest User</h3>
+                    <p id="user-email">guest@example.com</p>
+                    <p class="member-since">Member since: 2024</p>
+                    <button class="btn-logout" onclick="handleLogout()">LOGOUT</button>
+                </div>
+            </div>
+
+            <div class="order-section">
+                <div class="section-title">
+                    <h3>ORDER HISTORY</h3>
+                </div>
+                <div id="order-list" class="order-placeholder">
+                    <i class="fa-solid fa-box-open"></i>
+                    <p>You haven't placed any orders yet.</p>
+                    <a href="index.html" class="shop-now-link">START SHOPPING</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="account.js"></script>
+</body>
+</html>

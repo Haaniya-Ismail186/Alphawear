@@ -11,15 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- 2. Navigation Toggle ---
+// --- 2. Navigation Toggle (FIXED) ---
 function initNavigation() {
     const mobileMenu = document.getElementById('mobile-menu');
     const navList = document.getElementById('nav-list');
+    
     if (mobileMenu && navList) {
-        mobileMenu.addEventListener('click', () => {
-            navList.classList.toggle('is-active');
+        // Purana onclick hata kar naya simplified logic
+        mobileMenu.onclick = () => {
+            // CSS mein '.nav-links.active' ya '.nav-list.active' check karein
+            navList.classList.toggle('active'); 
             mobileMenu.classList.toggle('is-active');
-        });
+        };
     }
 }
 
@@ -81,7 +84,7 @@ function generateProducts(category) {
                         <div class="size-box" onclick="selectSize(this)">XL</div>
                     </div>
 
-                    <button class="btn-add" onclick="addToCart('${name}', ${price}, this)">
+                    <button class="btn-add" onclick="addToCart('${name.replace(/'/g, "\\'")}', ${price}, this)">
                         Add To Cart
                     </button>
                 </div>
@@ -99,64 +102,10 @@ function selectSize(element) {
     allSizes.forEach(box => box.classList.remove('active'));
     element.classList.add('active');
     
-    // Border color reset karein agar red hua tha
     parent.style.border = "none";
 }
 
-// --- 5. Cart Logic with Size Validation ---
-function addToCart(name, price, buttonElement) {
-    // Button ke zariye specific product card dhoondna
-    const productCard = buttonElement.closest('.product-card');
-    const selectedSizeBox = productCard.querySelector('.size-box.active');
-
-    // Check agar size select nahi hua
-    if (!selectedSizeBox) {
-        alert("Please select a size first!");
-        
-        // Visual feedback: Size container ko highlight karna
-        const sizeContainer = productCard.querySelector('.size-container');
-        sizeContainer.style.border = "1px solid red";
-        sizeContainer.style.borderRadius = "4px";
-        return; // Function yahin ruk jayega
-    }
-
-    const sizeValue = selectedSizeBox.innerText;
-    let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
-    
-    // Cart object mein naya item add karna
-    cart.push({ 
-        id: Date.now(), 
-        name: name, 
-        price: price, 
-        size: sizeValue,
-        img: productCard.querySelector('img').src,
-        quantity: 1 
-    });
-
-    localStorage.setItem('alphaCart', JSON.stringify(cart));
-    updateCartCount();
-    
-    alert(`${name} (Size: ${sizeValue}) has been added to your cart.`);
-}
-
-// --- 6. Update Navbar Cart Count ---
-function updateCartCount() {
-    const cartData = localStorage.getItem('alphaCart');
-    const count = cartData ? JSON.parse(cartData).length : 0;
-    const cartElement = document.getElementById('cart-count');
-    if (cartElement) {
-        cartElement.innerText = count;
-    }
-}
-
-
-
-
-
-
-
-
-// --- 5. Cart Logic (Updated with Login Check) ---
+// --- 5. Cart Logic (Final Updated with Login Check) ---
 function addToCart(name, price, buttonElement) {
     // 1. Check if User is Logged In
     const activeUser = localStorage.getItem('alphaUser');
@@ -174,6 +123,7 @@ function addToCart(name, price, buttonElement) {
         alert("Please select a size first!");
         const sizeContainer = productCard.querySelector('.size-container');
         sizeContainer.style.border = "1px solid red";
+        sizeContainer.style.borderRadius = "4px";
         return; 
     }
 
@@ -193,4 +143,14 @@ function addToCart(name, price, buttonElement) {
     localStorage.setItem('alphaCart', JSON.stringify(cart));
     updateCartCount();
     alert(`${name} (Size: ${sizeValue}) added to cart!`);
+}
+
+// --- 6. Update Navbar Cart Count ---
+function updateCartCount() {
+    const cartData = localStorage.getItem('alphaCart');
+    const count = cartData ? JSON.parse(cartData).length : 0;
+    const cartElement = document.getElementById('cart-count');
+    if (cartElement) {
+        cartElement.innerText = count;
+    }
 }

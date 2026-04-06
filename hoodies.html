@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoodies | AlphaWear</title>
+    <link rel="stylesheet" href="hoodies style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">ALPHAWEAR</div>
+        
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="nav-links" id="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shalwar-kameez.html">Shalwar Kameez</a></li>
+            <li><a href="hoodies.html" class="active-link" style="color: var(--beige);">Hoodies</a></li>
+            <li><a href="shirts.html">Shirts</a></li>
+            <li><a href="tshirts.html">T-Shirts</a></li>
+            <li><a href="pants.html">Pants & Trousers</a></li>
+            <li><a href="accessories.html">Accessories</a></li>
+            <li><a href="cart.html" class="cart-link">Cart</a></li>
+            <li><a href="account.html" class="account-btn"><i class="fas fa-user"></i> Account</a></li>
+        </ul>
+    </nav>
+
+    <header class="category-header" style="background-color: #f5f5f5 ; color: rgb(0, 0, 0);">
+        <div class="header-content">
+            <h1 style="color: var(--black);">PREMIUM HOODIES</h1>
+            <p>Streetwear Essentials | Oversized & Classic Fits</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="product-grid" id="product-display-grid">
+            </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 ALPHAWEAR. Urban Comfort Collection.</p>
+        </div>
+    </footer>
+
+    <script src="hoodies script.js"></script>
+
+    <script>
+        // Page load hote hi ye check karega
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hum function ko "Hoodies" category pass kar rahe hain
+            if (typeof generateProducts === "function") {
+                generateProducts("Hoodies");
+            }
+        });
+    </script>
+
+</body>
+</html>

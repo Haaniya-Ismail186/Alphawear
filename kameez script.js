@@ -26,11 +26,11 @@ function initNavigation() {
 // --- 3. Dynamic Product Generator ---
 function generateProducts(category) {
     const grid = document.getElementById('product-display-grid');
-    grid.innerHTML = ''; // Is se purana kachra saaf ho jayega (No double cards)
+    if (!grid) return;
+    grid.innerHTML = ''; // Clear existing content
 
-    // Specific Names for Shalwar Kameez (Aap inhein change kar sakte hain)
     const productNames = [
-        "BLUE CASUAL KAMEEZ SHALWAR", "RUST COTTON CASUAL KAMEEZ SHALWAR", "TEA PINK CASUAL KAMEEZ  SHALWAR", "BROWN COTTON PLAIN KAMEEZ SHALWAR",
+        "BLUE CASUAL KAMEEZ SHALWAR", "RUST COTTON CASUAL KAMEEZ SHALWAR", "TEA PINK CASUAL KAMEEZ SHALWAR", "BROWN COTTON PLAIN KAMEEZ SHALWAR",
         "OLIVE CASUAL KAMEEZ SHALWAR", "BLACK CASUAL KAMEEZ SHALWAR", "WHITE SEMI-FORMAL KAMEEZ SHALWAR", "LIGHT GREY PLAIN KAMEEZ SHALWAR",
         "BLUE SEMI-FORMAL KAMEEZ SHALWAR", "SKY BLUE CASUAL KAMEEZ SHALWAR", "BLACK SEMI-FORMAL KAMEEZ SHALWAR", "DARK GREY COTTON CASUAL KAMEEZ SHALWAR",
         "JADE GREEN CASUAL KAMEEZ SHALWAR", "BLUE GREY CASUAL KAMEEZ SHALWAR", "BROWN CASUAL KAMEEZ SHALWAR", "LIGHT BROWN CASUAL KAMEEZ SHALWAR",
@@ -72,13 +72,13 @@ function generateProducts(category) {
                 </div>
                 <div class="product-details">
                     <h3>${name}</h3>
-                    <p>Rs. ${price.toLocaleString()}</p>
+                    <p class="price">Rs. ${price.toLocaleString()}</p>
                     
                     <div class="size-container">
-                        <span>S</span>
-                        <span>M</span>
-                        <span>L</span>
-                        <span>XL</span>
+                        <div class="size-box" onclick="selectSize(this)">S</div>
+                        <div class="size-box" onclick="selectSize(this)">M</div>
+                        <div class="size-box" onclick="selectSize(this)">L</div>
+                        <div class="size-box" onclick="selectSize(this)">XL</div>
                     </div>
 
                     <button class="btn-add" onclick="addToCart('${name}', ${price})">
@@ -87,11 +87,23 @@ function generateProducts(category) {
                 </div>
             </div>
         `;
-        grid.innerHTML += productHTML;
+        grid.innerHTML += productHTML; // This was missing - essential to show cards
     }
 }
 
-// --- 4. Cart Logic ---
+// --- 4. Size Selection Function ---
+function selectSize(element) {
+    const parent = element.parentElement;
+    const allSizes = parent.querySelectorAll('.size-box');
+    
+    // Pehle sab se 'active' class hatao
+    allSizes.forEach(box => box.classList.remove('active'));
+    
+    // Phir jis par click hua usse 'active' kar do
+    element.classList.add('active');
+}
+
+// --- 5. Cart Logic ---
 function addToCart(name, price) {
     let cart = JSON.parse(localStorage.getItem('alphaCart')) || [];
     cart.push({ id: Date.now(), name: name, price: price });
